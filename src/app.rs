@@ -1,6 +1,7 @@
 use color_eyre::eyre::Result;
+use ratatui::layout::{Constraint, Direction, Layout};
 use ratatui::prelude::{Buffer, Rect};
-use ratatui::widgets::Widget;
+use ratatui::widgets::{Block, Borders, Widget};
 use ratatui::{DefaultTerminal, Frame, style::Stylize, widgets::Paragraph};
 
 pub struct App {
@@ -31,6 +32,31 @@ impl Widget for &App {
     where
         Self: Sized,
     {
-        Paragraph::new("Hello World").bold().render(area, buf);
+        let layout = Layout::default()
+            .direction(Direction::Horizontal)
+            .constraints(vec![
+                Constraint::Percentage(25),
+                Constraint::Percentage(50),
+                Constraint::Percentage(25),
+            ])
+            .split(area);
+
+        Paragraph::new("Explorer")
+            .bold()
+            .centered()
+            .block(Block::new().borders(Borders::ALL))
+            .render(layout[0], buf);
+
+        Paragraph::new("Content")
+            .bold()
+            .centered()
+            .block(Block::new().borders(Borders::ALL))
+            .render(layout[1], buf);
+
+        Paragraph::new("Outline")
+            .bold()
+            .centered()
+            .block(Block::new().borders(Borders::ALL))
+            .render(layout[2], buf);
     }
 }
