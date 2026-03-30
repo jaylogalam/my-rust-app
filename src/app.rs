@@ -4,6 +4,9 @@ use ratatui::prelude::{Buffer, Rect};
 use ratatui::widgets::{Block, Borders, Widget};
 use ratatui::{DefaultTerminal, Frame, style::Stylize, widgets::Paragraph};
 
+mod explorer;
+mod vault;
+
 pub struct App {
     pub(crate) exit: bool,
 }
@@ -23,7 +26,7 @@ impl App {
     }
 
     fn draw(&self, frame: &mut Frame) {
-        frame.render_widget(self, frame.area());
+        self.render(frame.area(), frame.buffer_mut());
     }
 }
 
